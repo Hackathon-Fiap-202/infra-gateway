@@ -1,12 +1,12 @@
 module "cognito" {
-  source = "modules/cognito"
+  source = "./modules/cognito"
 
   project_name = var.project_name
   region       = var.region
 }
 
 module "apigateway" {
-  source = "modules/apigateway"
+  source = "./modules/apigateway"
 
   project_name         = var.project_name
   region               = var.region
