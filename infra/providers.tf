@@ -25,7 +25,7 @@ provider "aws" {
     content {
       apigateway   = var.localstack_endpoint
       apigatewayv2 = var.localstack_endpoint
-      cognito_idp  = var.localstack_endpoint
+      cognitoidp   = var.localstack_endpoint
       lambda       = var.localstack_endpoint
       iam          = var.localstack_endpoint
     }

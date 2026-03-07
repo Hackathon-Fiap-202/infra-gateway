@@ -19,9 +19,9 @@ module "vpc_link" {
   source = "./modules/vpc-link"
 
   project_name    = var.project_name
-  vpc_id          = data.terraform_remote_state.infra_core.outputs.vpc_id
-  private_subnets = data.terraform_remote_state.infra_core.outputs.private_subnet_ids
+  vpc_id          = local.vpc_id
+  private_subnets = local.private_subnet_ids
   sg_ids = [
-    data.terraform_remote_state.infra_core.outputs.security_group_api_id
+    local.security_group_id
   ]
 }
