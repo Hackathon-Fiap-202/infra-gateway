@@ -84,3 +84,9 @@ variable "api_stage_name" {
   type        = string
   default     = "dev"
 }
+
+variable "ms_video_uri" {
+  description = "MS Video microservice URI (e.g., http://ms-video:8090)"
+  type        = string
+  default     = "http://ms-video:8090"
+}

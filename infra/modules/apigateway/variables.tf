@@ -17,3 +17,9 @@ variable "cognito_client_id" {
 variable "vpc_link_id" {
   type = string
 }
+
+variable "ms_video_uri" {
+  description = "MS Video microservice URI (e.g., http://ms-video:8090)"
+  type        = string
+  default     = "http://ms-video:8090"
+}
