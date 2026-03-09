@@ -35,4 +35,5 @@ terraform.rc
 
 # Plan outputs
 *.tfplan
+tfplan-*
 *.out

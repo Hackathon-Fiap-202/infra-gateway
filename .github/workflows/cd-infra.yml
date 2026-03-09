@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: infra-gateway-deploy
+  cancel-in-progress: false
+
 permissions:
   id-token: write
   contents: read
@@ -40,7 +44,7 @@ jobs:
       - name: Configure AWS credentials (OIDC + IAM Role)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/github-action-role
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Format
