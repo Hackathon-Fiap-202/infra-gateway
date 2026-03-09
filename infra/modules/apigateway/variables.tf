@@ -18,6 +18,11 @@ variable "vpc_link_id" {
   type = string
 }
 
+variable "use_localstack" {
+  type    = bool
+  default = true
+}
+
 variable "ms_video_uri" {
   description = "MS Video microservice URI (e.g., http://ms-video:8090)"
   type        = string

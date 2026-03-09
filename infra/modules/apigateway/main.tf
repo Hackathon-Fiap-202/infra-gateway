@@ -1,6 +1,13 @@
 resource "aws_apigatewayv2_api" "this" {
   name          = "${var.project_name}-api"
   protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_origins  = ["*"]
+    allow_methods  = ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS", "HEAD"]
+    allow_headers  = ["*"]
+    expose_headers = ["*"]
+  }
 }
 
 resource "aws_apigatewayv2_authorizer" "cognito" {
@@ -21,11 +28,14 @@ resource "aws_apigatewayv2_integration" "ms_video" {
   api_id           = aws_apigatewayv2_api.this.id
   integration_type = "HTTP_PROXY"
 
-  integration_method = "POST"
-  integration_uri    = var.ms_video_uri
+  integration_method = "ANY"
+  # In LocalStack we use a direct URI, in AWS we use VPC Link with {proxy}
+  integration_uri = var.use_localstack ? var.ms_video_uri : "${var.ms_video_uri}/{proxy}"
 
-  connection_type = "VPC_LINK"
-  connection_id   = var.vpc_link_id
+  connection_type = var.use_localstack ? "INTERNET" : "VPC_LINK"
+  connection_id   = var.use_localstack ? null : var.vpc_link_id
+
+  payload_format_version = "1.0"
 }
 
 resource "aws_apigatewayv2_route" "upload_video" {
@@ -37,6 +47,14 @@ resource "aws_apigatewayv2_route" "upload_video" {
 
   authorization_type = "JWT"
   authorizer_id      = aws_apigatewayv2_authorizer.cognito.id
+}
+
+# Rota genérica para Swagger e outros endpoints públicos (SEM autenticação)
+resource "aws_apigatewayv2_route" "proxy" {
+  api_id             = aws_apigatewayv2_api.this.id
+  route_key          = "ANY /{proxy+}"
+  target             = "integrations/${aws_apigatewayv2_integration.ms_video.id}"
+  authorization_type = "NONE"
 }
 
 resource "aws_apigatewayv2_stage" "this" {
