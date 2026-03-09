@@ -29,7 +29,7 @@ resource "aws_apigatewayv2_integration" "ms_video" {
   integration_type = "HTTP_PROXY"
 
   integration_method = "ANY"
-  integration_uri    = "${var.ms_video_uri}/{proxy}"
+  integration_uri    = var.ms_video_uri
 
   connection_type = "VPC_LINK"
   connection_id   = var.vpc_link_id
