@@ -13,3 +13,8 @@ output "api_gateway_invoke_url" {
 output "api_gateway_id" {
   value = aws_apigatewayv2_api.this.id
 }
+
+output "upload_video_route_id" {
+  value       = aws_apigatewayv2_route.upload_video.id
+  description = "Route ID for POST /videos/upload"
+}

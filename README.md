@@ -53,7 +53,7 @@ infra/
 
 - [Terraform](https://www.terraform.io/downloads) >= 1.0
 - AWS CLI configurado com credenciais apropriadas
-- Acesso ao bucket S3 `nextime-frame-state-bucket` para o backend remoto
+- Acesso ao bucket S3 `nextime-frame-state-bucket-s3` para o backend remoto
 - Estado remoto do módulo `infra-core` disponível no mesmo bucket
 
 ## 🚀 Como Usar
@@ -136,7 +136,7 @@ resource "aws_apigatewayv2_integration" "ms_video" {
 
 O estado do Terraform é armazenado remotamente no S3:
 
-- **Bucket**: `nextime-frame-state-bucket`
+- **Bucket**: `nextime-frame-state-bucket-s3`
 - **Key**: `gateway/infra.tfstate`
 - **Região**: `us-east-1`
 - **Criptografia**: Habilitada
@@ -149,7 +149,7 @@ Este módulo depende do estado remoto do módulo `infra-core` para obter:
 - Security Group ID da API
 
 O estado remoto é acessado via:
-- **Bucket**: `nextime-frame-state-bucket`
+- **Bucket**: `nextime-frame-state-bucket-s3`
 - **Key**: `infra-core/infra.tfstate`
 
 ## 📝 Versões

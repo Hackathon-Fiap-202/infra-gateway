@@ -1,0 +1,46 @@
+# =============================================================================
+# GATEWAY INFRASTRUCTURE TERRAFORM VARIABLES - LOCAL DEVELOPMENT
+# =============================================================================
+# Copy this file to terraform.tfvars and adjust values as needed
+
+# =============================================================================
+# Core Configuration
+# =============================================================================
+
+project_name = "hackhaton"
+aws_region   = "us-east-1"
+region       = "us-east-1"
+
+# =============================================================================
+# LocalStack / AWS Configuration
+# =============================================================================
+
+use_localstack       = true
+localstack_endpoint  = "http://localhost:4566"
+
+# =============================================================================
+# Cognito Configuration
+# =============================================================================
+
+cognito_user_pool_name = "hackhaton-user-pool"
+cognito_app_client_name = "hackhaton-app-client"
+cognito_password_min_length = 8
+
+# =============================================================================
+# API Gateway Configuration
+# =============================================================================
+
+api_gateway_name = "hackhaton-api"
+api_gateway_protocol_type = "HTTP"  # Use HTTP for LocalStack
+api_stage_name = "dev"
+
+# =============================================================================
+# Tags Applied to All Resources
+# =============================================================================
+
+tags = {
+  Environment = "development"
+  Project     = "hackhaton"
+  ManagedBy   = "terraform"
+  CreatedAt   = "2026-03-07"
+}

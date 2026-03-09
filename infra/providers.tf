@@ -7,14 +7,13 @@ terraform {
   }
 
   backend "s3" {
-    bucket  = "nextime-frame-state-bucket"
-    key = "gateway/infra.tfstate"
+    bucket  = "nextime-frame-state-bucket-s3"
+    key     = "infra-gateway/infra.tfstate"
     region  = "us-east-1"
     encrypt = true
   }
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
 }
-
