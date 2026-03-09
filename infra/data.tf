@@ -2,7 +2,7 @@
 data "terraform_remote_state" "infra_core" {
   backend = "s3"
   config = {
-    bucket = "nextime-frame-state-bucket"
+    bucket = "nextime-frame-state-bucket-s3"
     key    = "infra-core/infra.tfstate"
     region = "us-east-1"
   }
@@ -12,7 +12,7 @@ data "terraform_remote_state" "infra_core" {
 data "terraform_remote_state" "infra_ecs" {
   backend = "s3"
   config = {
-    bucket = "nextime-frame-state-bucket"
+    bucket = "nextime-frame-state-bucket-s3"
     key    = "infra-ecs/infra.tfstate"
     region = "us-east-1"
   }
