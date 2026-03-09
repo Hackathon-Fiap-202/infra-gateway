@@ -1,7 +1,15 @@
-name: Destroy AWS Infrastructure
+name: Destroy AWS Infrastructure (infra-gateway)
 
 on:
   workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type DESTROY to confirm permanent infrastructure removal'
+        required: true
+
+concurrency:
+  group: infra-gateway-destroy
+  cancel-in-progress: false
 
 permissions:
   id-token: write
@@ -15,8 +23,15 @@ jobs:
   terraform-destroy:
     name: Terraform Destroy
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
+      - name: Validate confirmation
+        if: ${{ github.event.inputs.confirmation != 'DESTROY' }}
+        run: |
+          echo "ERROR: confirmation input must be exactly 'DESTROY'. Got: '${{ github.event.inputs.confirmation }}'"
+          exit 1
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -28,7 +43,7 @@ jobs:
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:role/github-action-role
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Terraform Init
