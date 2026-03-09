@@ -20,18 +20,6 @@ variable "region" {
   default     = "us-east-1"
 }
 
-variable "use_localstack" {
-  description = "Use LocalStack instead of AWS"
-  type        = bool
-  default     = true
-}
-
-variable "localstack_endpoint" {
-  description = "LocalStack endpoint URL"
-  type        = string
-  default     = "http://localhost:4566"
-}
-
 variable "tags" {
   description = "Tags applied to resources"
   type        = map(string)
@@ -83,10 +71,4 @@ variable "api_stage_name" {
   description = "API Gateway stage name"
   type        = string
   default     = "dev"
-}
-
-variable "ms_video_uri" {
-  description = "MS Video microservice URI (e.g., http://ms-video:8090)"
-  type        = string
-  default     = "http://ms-video:8090"
 }

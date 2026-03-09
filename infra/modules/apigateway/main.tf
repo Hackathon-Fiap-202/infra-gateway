@@ -29,11 +29,10 @@ resource "aws_apigatewayv2_integration" "ms_video" {
   integration_type = "HTTP_PROXY"
 
   integration_method = "ANY"
-  # In LocalStack we use a direct URI, in AWS we use VPC Link with {proxy}
-  integration_uri = var.use_localstack ? var.ms_video_uri : "${var.ms_video_uri}/{proxy}"
+  integration_uri    = "${var.ms_video_uri}/{proxy}"
 
-  connection_type = var.use_localstack ? "INTERNET" : "VPC_LINK"
-  connection_id   = var.use_localstack ? null : var.vpc_link_id
+  connection_type = "VPC_LINK"
+  connection_id   = var.vpc_link_id
 
   payload_format_version = "1.0"
 }

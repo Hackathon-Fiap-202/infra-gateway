@@ -19,9 +19,9 @@ data "terraform_remote_state" "infra_ecs" {
 }
 
 locals {
-  vpc_id             = var.use_localstack ? "vpc-local-dev" : data.terraform_remote_state.infra_core.outputs.vpc_id
-  private_subnet_ids = var.use_localstack ? ["subnet-local-dev"] : data.terraform_remote_state.infra_core.outputs.private_subnet_ids
-  security_group_id  = var.use_localstack ? "sg-local-dev" : data.terraform_remote_state.infra_core.outputs.security_group_api_id
+  vpc_id             = data.terraform_remote_state.infra_core.outputs.vpc_id
+  private_subnet_ids = data.terraform_remote_state.infra_core.outputs.private_subnet_ids
+  security_group_id  = data.terraform_remote_state.infra_core.outputs.security_group_api_id
   # ms-video ALB DNS — used by API Gateway VPC Link integration
-  ms_video_alb_uri = var.use_localstack ? var.ms_video_uri : "http://${data.terraform_remote_state.infra_ecs.outputs.alb_dns_name}"
+  ms_video_alb_uri = "http://${data.terraform_remote_state.infra_ecs.outputs.alb_dns_name}"
 }
