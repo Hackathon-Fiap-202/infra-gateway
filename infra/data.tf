@@ -22,6 +22,6 @@ locals {
   vpc_id             = data.terraform_remote_state.infra_core.outputs.vpc_id
   private_subnet_ids = data.terraform_remote_state.infra_core.outputs.private_subnet_ids
   security_group_id  = data.terraform_remote_state.infra_core.outputs.security_group_api_id
-  # ms-video ALB DNS — used by API Gateway VPC Link integration
-  ms_video_alb_uri = "http://${data.terraform_remote_state.infra_ecs.outputs.alb_dns_name}"
+  # ms-video ALB listener ARN — required by API Gateway VPC Link integration
+  ms_video_listener_arn = data.terraform_remote_state.infra_ecs.outputs.alb_listener_arn
 }

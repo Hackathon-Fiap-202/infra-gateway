@@ -19,7 +19,6 @@ variable "vpc_link_id" {
 }
 
 variable "ms_video_uri" {
-  description = "MS Video microservice URI (e.g., http://ms-video:8090)"
+  description = "ALB listener ARN for ms-video (required by API Gateway VPC Link integration)"
   type        = string
-  default     = "http://ms-video:8090"
 }
