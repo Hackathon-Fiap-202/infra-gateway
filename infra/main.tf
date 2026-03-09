@@ -13,7 +13,8 @@ module "apigateway" {
   cognito_user_pool_id = module.cognito.user_pool_id
   cognito_client_id    = module.cognito.user_pool_client_id
   vpc_link_id          = module.vpc_link.vpc_link_id
-  ms_video_uri         = var.ms_video_uri
+  ms_video_uri         = local.ms_video_alb_uri
+  use_localstack       = var.use_localstack
 }
 
 module "vpc_link" {
