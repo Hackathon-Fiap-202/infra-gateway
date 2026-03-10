@@ -48,6 +48,28 @@ resource "aws_apigatewayv2_route" "upload_video" {
   authorizer_id      = aws_apigatewayv2_authorizer.cognito.id
 }
 
+resource "aws_apigatewayv2_route" "presign_upload" {
+  api_id = aws_apigatewayv2_api.this.id
+
+  route_key = "POST /videos/upload/presign"
+
+  target = "integrations/${aws_apigatewayv2_integration.ms_video.id}"
+
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.cognito.id
+}
+
+resource "aws_apigatewayv2_route" "confirm_upload" {
+  api_id = aws_apigatewayv2_api.this.id
+
+  route_key = "POST /videos/confirm/{key}"
+
+  target = "integrations/${aws_apigatewayv2_integration.ms_video.id}"
+
+  authorization_type = "JWT"
+  authorizer_id      = aws_apigatewayv2_authorizer.cognito.id
+}
+
 # Rota genérica para Swagger e outros endpoints públicos (SEM autenticação)
 resource "aws_apigatewayv2_route" "proxy" {
   api_id             = aws_apigatewayv2_api.this.id
